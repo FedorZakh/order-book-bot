@@ -18,3 +18,4 @@ Docker
 pybit - pip install pybit
 requests - pip install requests
 dotenv - pip install dotenv
+websockets - pip install websockets

@@ -40,7 +40,7 @@ class DatabaseManager:
         """Добавляет ордер продажи"""
         with sq.connect(self.db_path) as conn:
             conn.execute(
-                "INSERT INTO orders_buy (name, value, price) VALUES (?,?,?)",
+                "INSERT INTO orders_sell (name, value, price) VALUES (?,?,?)",
                 (name, value, price),
             )
 

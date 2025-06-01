@@ -1,6 +1,6 @@
 import requests
 import time
-from app.data_req.queries import DatabaseManager
+from data_req.queries import DatabaseManager
 
 db = DatabaseManager("database.db")
 
@@ -9,11 +9,11 @@ url = "https://api.bybit.com/v5/market/orderbook"
 params = {
     "category": "spot",
     "symbol": "BTCUSDT",
-    "limit": 300,
+    "limit": 200,
 }
 
-parameter = "continue"
-# parameter = "start"
+# parameter = "continue"
+parameter = "start"
 
 
 def order_bot():
@@ -28,28 +28,20 @@ def order_bot():
                 data = response.json()
                 bids = data["result"]["b"]
                 asks = data["result"]["a"]
-
-                min_size = 1
-
+                name = data["result"]["s"]
+                min_size = 0.05
                 large_bids = [order for order in bids if float(order[1]) >= min_size]
                 large_asks = [order for order in asks if float(order[1]) >= min_size]
+                for i in large_bids:
+                    db.add_order_buy(name, i[1], i[0])
+                for i in large_asks:
+                    db.add_order_sell(name, i[1], i[0])
 
-                print("Крупные заявки на покупку:")
-                for price, size in large_bids:
-                    print(f"Цена: {price}, Объем: {size}")
-
-            print("\nКрупные заявки на продажу:")
-            for price, size in large_asks:
-                print(f"Цена: {price}, Объем: {size}")
-
-            else:
-                print("Ошибка при запросе:", response.text)
-                print(f"sell: {large_bids}")
-                print(f"buy: {large_asks}")
             count += 1
             print(count)
-            time.sleep(3)
+            time.sleep(5)
+
     elif parameter == "continue":
         while True:
-            print("тестовый режим продолжение")
-            time.sleep(3)
+            print("тестовый режим")
+            time.sleep(5)
