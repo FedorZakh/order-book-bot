@@ -149,3 +149,6 @@ plt.gca().invert_yaxis()
 plt.title("Order Book Levels (Volume -> Color & Width)")
 plt.grid(True)
 plt.show()
+
+def test()
+    pass
