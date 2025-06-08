@@ -102,6 +102,9 @@ def order_bot():
                 for i in large_asks:
                     db.add_order_sell(name, i[1], i[0])
             count += 1
+            print("ask:", large_asks)
+            print("ask:", large_bids)
+
             print(count)
             time.sleep(60)
     elif parameter == "continue":
